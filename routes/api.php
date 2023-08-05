@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\MoviesController;
+
 /*use App\Http\Controllers\UserController;*/
 
 /*
@@ -24,5 +26,13 @@ Route::middleware('jwt.verify')->group(function(){
     /*Route::get('user' ,[UserController::class, "index"]);*/
     Route::post('logout',[AuthController::class, "logout"]);
     Route::get('user' ,[AuthController::class, "user"]);
+
+    //movie
+    Route::get('movie/{name}' ,[MoviesController::class, "movieShow"]);
+    Route::get('movie' ,[MoviesController::class, "movieShow"]);
+    Route::post('addactormovie' ,[MoviesController::class, "addActorMovie"]);
+    Route::post('moviecreate' ,[MoviesController::class, "movieCreate"]);
+
+    //actors and directors
 
 });

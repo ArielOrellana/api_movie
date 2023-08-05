@@ -15,12 +15,10 @@ class CreateEpisodesTable extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tv_show_id');
+            $table->bigInteger('tv_show_id');
             $table->integer('season_number');
             $table->integer('episode_number');
             $table->timestamps();
-
-            /*$table->foreign('tv_show_id')->references('id')->on('tv_shows');*/
         });
     }
 

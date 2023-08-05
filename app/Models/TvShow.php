@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class TvShow extends Model
 {
-    use HasFactory;
+    protected $table = 'tv_shows';
+
+    protected $primaryKey='id';
+
+    protected $fillable=[
+        'title',
+        'genre',
+        'director_id',
+        'created_at',
+        'updated_at',
+    ];
 }

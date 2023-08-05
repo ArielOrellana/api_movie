@@ -15,10 +15,9 @@ class CreateActorRelTable extends Migration
     {
         Schema::create('actor_rel', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('actor_id');
-            $table->unsignedBigInteger('tv_show_id');
-            $table->unsignedBigInteger('movie_id');
-            /*$table->timestamps();*/
+            $table->integer('actor_id')->nullable();
+            $table->integer('tv_show_id')->nullable();
+            $table->integer('movie_id')->nullable();
         });
     }
 

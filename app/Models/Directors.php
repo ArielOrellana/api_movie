@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Directors extends Model
 {
-    use HasFactory;
+    protected $table = 'directors';
+
+    protected $primaryKey='id';
+
+    protected $fillable=[
+        'name',
+        'created_at',
+        'updated_at',
+    ];
 }
