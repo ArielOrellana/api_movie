@@ -1,61 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel 8 Application - README
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This repository contains a Laravel 8 application built using PHP 7.3. The application focuses on managing movies, directors, actors, and TV shows through a RESTful API. Follow the instructions below to set up and run the application.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 7.3
+- Composer
+- Database MySQL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone this repository to your local machine:
 
-## Learning Laravel
+```bash
+git clone <repository_url>
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Create a `.env` file in the root directory of the project. You can use the provided `.env.example` file as a template.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Configure the database connection in the `.env` file by setting the appropriate database driver, host, port, database name, username, and password.
 
-## Laravel Sponsors
+4. Open a terminal and navigate to the project directory.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+5. Install the project dependencies using Composer:
 
-### Premium Partners
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+6. Generate a new application key:
 
-## Contributing
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. Generate the JWT secret key:
 
-## Code of Conduct
+```bash
+php artisan jwt:secret
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+8. Create the desired database for the application in your chosen database management system.
 
-## Security Vulnerabilities
+9. Run database migrations to create the necessary tables:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate
+```
 
-## License
+## API Endpoints
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### User
+
+- Register User:
+  - Endpoint: `../public/api/register`
+  - Method: POST
+
+- Login:
+  - Endpoint: `../public/api/login`
+  - Method: POST
+
+- Logout:
+  - Endpoint: `../public/api/logout`
+  - Method: POST
+
+- User:
+  - Endpoint: `../public/api/user`
+  - Method: GET
+
+### Movies
+
+- Create a movie (Requires a created director):
+  - Endpoint: `../public/api/moviecreate`
+  - Method: POST
+
+- Get movies (Filter by id, genre, title, or retrieve all):
+  - Endpoint: `../public/api/movie`
+  - Method: GET
+
+### Actors
+
+- Create an actor:
+  - Endpoint: `../public/api/actorcreate`
+  - Method: POST
+
+- Get actors (Filter by name or actor_id):
+  - Endpoint: `../public/api/actor`
+  - Method: GET
+
+### Directors
+
+- Create a director:
+  - Endpoint: `../public/api/directorcreate`
+  - Method: POST
+
+- Get directors (Filter by name or director_id):
+  - Endpoint: `../public/api/director`
+  - Method: GET
+
+### TV Shows
+
+- Create a TV show:
+  - Endpoint: `../public/api/tvshowcreate`
+  - Method: POST
+
+- Get TV shows (Filter by id, genre, title, or retrieve all):
+  - Endpoint: `../public/api/tvshow`
+  - Method: GET
+
+- Create episodes for a TV show:
+  - Endpoint: `../public/api/addepisodes`
+  - Method: POST
+
+- Get episodes by TV show id:
+  - Endpoint: `../public/api/episode`
+  - Method: GET
+
+### Adding Actors
+
+- Add actors to a movie:
+  - Endpoint: `../public/api/addactormovie`
+  - Method: POST
+
+- Add actors to a TV show:
+  - Endpoint: `../public/api/addactortv`
+  - Method: POST
