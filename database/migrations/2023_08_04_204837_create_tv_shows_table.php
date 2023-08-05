@@ -17,10 +17,8 @@ class CreateTvShowsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('genre');
-            $table->unsignedBigInteger('director_id');
+            $table->bigInteger('director_id');
             $table->timestamps();
-
-            /*$table->foreign('director_id')->references('id')->on('directors');*/
         });
     }
 

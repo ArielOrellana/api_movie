@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\OrganizationController;
 
 /*use App\Http\Controllers\UserController;*/
 
@@ -28,11 +29,13 @@ Route::middleware('jwt.verify')->group(function(){
     Route::get('user' ,[AuthController::class, "user"]);
 
     //movie
-    Route::get('movie/{name}' ,[MoviesController::class, "movieShow"]);
     Route::get('movie' ,[MoviesController::class, "movieShow"]);
     Route::post('addactormovie' ,[MoviesController::class, "addActorMovie"]);
     Route::post('moviecreate' ,[MoviesController::class, "movieCreate"]);
 
     //actors and directors
-
+    Route::get('director', [OrganizationController::class, "directors"]);
+    Route::get('actor', [OrganizationController::class, "actors"]);
+    Route::post('directorcreate' ,[OrganizationController::class, "directorCreate"]);
+    Route::post('actorcreate' ,[OrganizationController::class, "actorCreate"]);
 });

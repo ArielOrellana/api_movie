@@ -10,14 +10,35 @@ use Illuminate\Support\Facades\DB;
 
 class MoviesController extends Controller
 {
-    public function movieShow(Request $request, $name=''){
-
+    public function movieShow(Request $request){
         // consult movie
-
-        if(!$name==''){
+        if($request->id && $request->title){
             $sql_movie= Movies::select('directors.*', 'movies.*')
             ->join('directors', 'movies.director_id', '=', 'directors.id')
-            ->where('movies.title', 'like', '%'.$name.'%')
+            ->where('movies.id', $request->id)
+            ->where('movies.title', 'like', '%'.$request->title.'%')
+            ->get();
+        }
+        elseif($request->id && $request->genre){
+            $sql_movie= Movies::select('directors.*', 'movies.*')
+            ->join('directors', 'movies.director_id', '=', 'directors.id')
+            ->where('movies.id', $request->id)
+            ->where('movies.genre', 'like', '%'.$request->genre.'%')
+            ->get();
+        }
+        elseif($request->title && $request->genre){
+            $sql_movie= Movies::select('directors.*', 'movies.*')
+            ->join('directors', 'movies.director_id', '=', 'directors.id')
+            ->where('movies.genre', 'like', '%'.$request->genre.'%')
+            ->where('movies.title', 'like', '%'.$request->title.'%')
+            ->get();
+        }
+        elseif($request->id && $request->title && $request->genre){
+            $sql_movie= Movies::select('directors.*', 'movies.*')
+            ->join('directors', 'movies.director_id', '=', 'directors.id')
+            ->where('movies.id', $request->id)
+            ->where('movies.genre', 'like', '%'.$request->genre.'%')
+            ->where('movies.title', 'like', '%'.$request->title.'%')
             ->get();
         }elseif($request->title){
             $sql_movie= Movies::select('directors.*', 'movies.*')
@@ -41,7 +62,6 @@ class MoviesController extends Controller
             ->get();
         }
 
-
         $result_movie=[];
         //get list of actors for each movie
         foreach($sql_movie as $m){
@@ -62,15 +82,19 @@ class MoviesController extends Controller
             $data_movie=[
                 'id' => $m['id'],
                 'title' => $m['title'],
+                'director_id' => $m['director_id'],
                 'director' => $m['name'],
                 'actors' => $list_actors,
                 'genre' => $m['genre'],
+                'created_at'=>$m['created_at'],
+                'updated_at'=>$m['updated_at'],
             ];
             array_push($result_movie, $data_movie);
         }
 
         return response()->json($result_movie);
     }
+
     public function addActorMovie(Request $request){
         $response=[];
         $this->validate($request,[
@@ -81,8 +105,10 @@ class MoviesController extends Controller
         $actors_id=explode( ',', $request->actors_id);
         if(count($actors_id)>1){
             foreach($actors_id as $actor_id){
+                //check if the actor exists
                 $sql_actor=Actors::find($actor_id);
                 if($sql_actor){
+                    // check if the actor is already in the movie
                     $sql_actor_rel=DB::table('actor_rel')->select('*')
                     ->where('actor_id', $sql_actor['id'])
                     ->where('movie_id', $request->movie_id)
@@ -109,8 +135,10 @@ class MoviesController extends Controller
                 }
             }
         }else{
+            //check if the actor exists
             $sql_actor=Actors::find($request->actors_id);
             if($sql_actor){
+                //check if the actor is already in the movie
                 $sql_actor_rel=DB::table('actor_rel')->select('*')
                 ->where('actor_id', $sql_actor['id'])
                 ->where('movie_id', $request->movie_id)
@@ -146,6 +174,7 @@ class MoviesController extends Controller
             'director_id' => 'required',
             'genre' => 'required',
         ]);
+
         $sql_director=Directors::find($request->director_id);
         if($sql_director){
             $movie = Movies::create([
@@ -156,6 +185,7 @@ class MoviesController extends Controller
         }else{
             $movie = ['director_id' => 'non-existent'];
         }
+
         return response()->json($movie);
     }
 }
