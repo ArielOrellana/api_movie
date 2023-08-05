@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\TvShowController;
 
-/*use App\Http\Controllers\UserController;*/
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +23,7 @@ Route::post('register',[AuthController::class, "register"]);
 Route::post('login',[AuthController::class, "login"]);
 
 Route::middleware('jwt.verify')->group(function(){
-    /* test JWT */
-    /*Route::get('user' ,[UserController::class, "index"]);*/
+
     Route::post('logout',[AuthController::class, "logout"]);
     Route::get('user' ,[AuthController::class, "user"]);
 
@@ -38,4 +37,13 @@ Route::middleware('jwt.verify')->group(function(){
     Route::get('actor', [OrganizationController::class, "actors"]);
     Route::post('directorcreate' ,[OrganizationController::class, "directorCreate"]);
     Route::post('actorcreate' ,[OrganizationController::class, "actorCreate"]);
+
+    //tvshow
+    Route::get('tvshow' ,[TvShowController::class, "tvShow"]);
+    Route::post('addactortv' ,[TvShowController::class, "addActorTvShow"]);
+    Route::post('tvshowcreate' ,[TvShowController::class, "tvShowCreate"]);
+
+    //episodes
+    Route::post('addepisodes' ,[TvShowController::class, "episodesCreate"]);
+    Route::get('episode' ,[TvShowController::class, "episodes"]);
 });
